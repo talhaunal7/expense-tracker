@@ -66,8 +66,14 @@ func ValidateToken() gin.HandlerFunc {
 	}
 }
 
-func GetUserIdFromContext(ctx *gin.Context) float64 {
+/*func GetUserIdFromContext(ctx *gin.Context) float64 {
 	tokenUserId, _ := ctx.Get("id")
 	userId, _ := tokenUserId.(float64)
 	return userId
+}*/
+
+func GetUserIdFromContext(ctx *gin.Context) int {
+	tokenUserId, _ := ctx.Get("id")
+	userId, _ := tokenUserId.(float64)
+	return int(userId)
 }

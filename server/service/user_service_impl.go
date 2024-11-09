@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/talhaunal7/expense-tracker/server/entity"
-	"github.com/talhaunal7/expense-tracker/server/model"
+	"github.com/talhaunal7/expense-tracker/server/model/dto"
+	"github.com/talhaunal7/expense-tracker/server/model/request"
 	"github.com/talhaunal7/expense-tracker/server/repository"
 	"golang.org/x/crypto/bcrypt"
 	"os"
@@ -22,7 +23,7 @@ func NewUserService(userRepository repository.UserRepository) UserService {
 	}
 }
 
-func (u *UserServiceImpl) Register(userRegisterRequest *model.UserRegister) error {
+func (u *UserServiceImpl) Register(userRegisterRequest *request.UserRegister) error {
 
 	hash, err := bcrypt.GenerateFromPassword([]byte(userRegisterRequest.Password), 10)
 	if err != nil {
@@ -40,7 +41,7 @@ func (u *UserServiceImpl) Register(userRegisterRequest *model.UserRegister) erro
 	return nil
 }
 
-func (u *UserServiceImpl) Login(userLoginRequest *model.UserLogin) (*model.UserDto, *string, error) {
+func (u *UserServiceImpl) Login(userLoginRequest *request.UserLogin) (*dto.UserDto, *string, error) {
 
 	user, err := u.userRepository.FindUserByEmail(userLoginRequest.Email)
 	if err != nil {
@@ -66,7 +67,7 @@ func (u *UserServiceImpl) Login(userLoginRequest *model.UserLogin) (*model.UserD
 		return nil, nil, err
 	}
 
-	userDto := model.UserDto{
+	userDto := dto.UserDto{
 		ID:        user.ID,
 		Email:     user.Email,
 		FirstName: user.FirstName,

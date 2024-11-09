@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/talhaunal7/expense-tracker/server/middleware"
-	"github.com/talhaunal7/expense-tracker/server/model"
+	"github.com/talhaunal7/expense-tracker/server/model/request"
 	"github.com/talhaunal7/expense-tracker/server/service"
 	"log"
 	"net/http"
@@ -21,7 +21,7 @@ func NewUserController(userService service.UserService) UserController {
 
 func (uc *UserController) Register(ctx *gin.Context) {
 
-	var user model.UserRegister
+	var user request.UserRegister
 
 	if err := ctx.ShouldBindJSON(&user); err != nil {
 		log.Print(err.Error())
@@ -42,7 +42,7 @@ func (uc *UserController) Register(ctx *gin.Context) {
 
 func (uc *UserController) Login(ctx *gin.Context) {
 
-	var user model.UserLogin
+	var user request.UserLogin
 
 	if err := ctx.ShouldBindJSON(&user); err != nil {
 		log.Print(err.Error())
@@ -64,12 +64,12 @@ func (uc *UserController) Login(ctx *gin.Context) {
 }
 
 func (uc *UserController) Logout(ctx *gin.Context) {
-	userId := middleware.GetUserIdFromContext(ctx)
+	/*userId := middleware.GetUserIdFromContext(ctx)
 	err := uc.UserService.Logout(userId)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
-	}
+	}*/
 	ctx.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
 }
 

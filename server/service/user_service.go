@@ -1,9 +1,12 @@
 package service
 
-import "github.com/talhaunal7/expense-tracker/server/model"
+import (
+	"github.com/talhaunal7/expense-tracker/server/model/dto"
+	"github.com/talhaunal7/expense-tracker/server/model/request"
+)
 
 type UserService interface {
-	Register(*model.UserRegister) error
-	Login(*model.UserLogin) (*model.UserDto, *string, error)
+	Register(*request.UserRegister) error
+	Login(*request.UserLogin) (*dto.UserDto, *string, error)
 	Logout(id float64) error
 }

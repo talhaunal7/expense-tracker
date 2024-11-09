@@ -6,6 +6,6 @@ import (
 
 type Category struct {
 	gorm.Model
-	Name     string `gorm:"not null"`
-	Expenses []Expense
+	Name string `gorm:"not null"`
+	//Expenses []Expense
 }

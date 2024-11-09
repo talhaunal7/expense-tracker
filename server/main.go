@@ -41,6 +41,7 @@ func init() {
 	dbUser := os.Getenv("POSTGRES_USER")
 	dbPassword := os.Getenv("POSTGRES_PASSWORD")
 	dbName := os.Getenv("POSTGRES_DB")
+
 	fmt.Println("values", dbHost, dbPort, dbUser, dbPassword, dbName)
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai",
@@ -56,15 +57,20 @@ func init() {
 		log.Fatal(err.Error())
 	}
 
-	err = db.AutoMigrate(&entity.User{})
+	err = db.AutoMigrate(&entity.User{}, &entity.Expense{}, &entity.Category{})
 
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
+	//-------------------------------------
 	userRepository = repository.NewUserRepository(db)
 	userService = service.NewUserService(userRepository)
 	userController = controller.NewUserController(userService)
+
+	expenseRepository = repository.NewExpenseRepository(db)
+	expenseService = service.NewExpenseService(expenseRepository)
+	expenseController = controller.NewExpenseController(expenseService)
 
 	server = gin.Default()
 }
@@ -73,6 +79,7 @@ func main() {
 
 	basepath := server.Group("/v1")
 	userController.RegisterUserRoutes(basepath)
+	expenseController.RegisterExpenseRoutes(basepath)
 
 	log.Fatal(server.Run(":8080"))
 }

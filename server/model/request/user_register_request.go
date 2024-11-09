@@ -1,4 +1,4 @@
-package model
+package request
 
 type UserRegister struct {
 	Email     string `json:"email" binding:"required"`

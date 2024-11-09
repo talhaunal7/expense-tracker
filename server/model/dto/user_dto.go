@@ -1,4 +1,4 @@
-package model
+package dto
 
 type UserDto struct {
 	ID        uint

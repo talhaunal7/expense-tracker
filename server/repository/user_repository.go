@@ -27,6 +27,7 @@ func (userRepo userRepository) CreateUser(user entity.User) error {
 
 func (userRepo userRepository) FindUserByEmail(email string) (entity.User, error) {
 	var user entity.User
-	result := userRepo.db.First("email = ?", email).First(&user)
+	result := userRepo.db.Where("email = ?", email).First(&user)
+	//result := userRepo.db.First("email = ?", email).First(&user)
 	return user, result.Error
 }
